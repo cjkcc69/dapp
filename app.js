@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();  
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
+
 server.listen(8080);
 
 app.use(express.static("public"));
@@ -17,6 +18,7 @@ var proof = proofContract.at("0x6BD4e5Fd951aF85559258A50979579B5a744E482");
 app.get("/submit", function(req, res){
     var fileHash = req.query.hash;
     var owner = req.query.owner;
+
     proof.set.sendTransaction(owner, fileHash, {
         from: web3.eth.accounts[0],
     }, function(error, transactionHash){
@@ -30,6 +32,7 @@ app.get("/submit", function(req, res){
         }
     })
 })
+
 
 app.get("/getInfo", function(req, res){
     var fileHash = req.query.hash;
